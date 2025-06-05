@@ -136,41 +136,38 @@
 
 
 const questions = [
-  // --- Komparativ/Superlativ: Adjektiv vor dem Nomen ---
-  { text: "Hat Max einen ___ Bruder als Leo?", options: ["jüngeren", "jüngste", "jüngerer", "jüngeres"], correct: 0 },
-  { text: "Ist Leonie ihre ___ Schwester?", options: ["ältere", "älterer", "ältestes", "älteres"], correct: 0 },
-  { text: "Wer trägt die ___ Hose?", options: ["langer", "längste", "lange", "längeren"], correct: 1 },
-  { text: "Wie heißt das ___ Kind in der Gruppe?", options: ["kleinster", "kleiner", "kleinste", "kleines"], correct: 2 },
-  { text: "Hat Uwe ein ___ Kind als Tom?", options: ["kleineres", "kleines", "kleinste", "kleinster"], correct: 0 },
-  { text: "Wer hat den ___ Hund?", options: ["größer", "größte", "großer", "größten"], correct: 3 },
-  { text: "Hat Mia eine ___ Schwester?", options: ["klügste", "kluger", "kluge", "klug"], correct: 2 },
-  { text: "Ist Ben ein ___ Junge als Jonas?", options: ["größte", "größerer", "großes", "größter"], correct: 1 },
+  { text: "Hat Max einen ___ Bruder als Leo?", options: ["jüngerer", "jüngeren", "jüngstes", "jüngeres"], correct: 1 },
+  { text: "Ist Leonie ihre ___ Schwester?", options: ["älteres", "ältere", "älterer", "ältestes"], correct: 1 },
+  { text: "Wer trägt die ___ Hose?", options: ["lange", "langer", "längste", "längeren"], correct: 2 },
+  { text: "Wie heißt das ___ Kind in der Gruppe?", options: ["kleiner", "kleinster", "kleinste", "kleines"], correct: 2 },
+  { text: "Hat Uwe ein ___ Kind als Tom?", options: ["kleines", "kleineres", "kleinste", "kleinster"], correct: 1 },
+  { text: "Wer hat den ___ Hund?", options: ["größter", "größer", "großer", "größten"], correct: 3 },
+  { text: "Hat Mia eine ___ Schwester?", options: ["klug", "klügste", "kluger", "kluge"], correct: 3 },
+  { text: "Ist Ben ein ___ Junge als Jonas?", options: ["größter", "größerer", "großes", "größte"], correct: 1 },
   { text: "Wie viele ___ Kinder als Paul sind im Raum?", options: ["älterer", "älteres", "ältere", "ältesten"], correct: 2 },
-  { text: "Sind Lisa und Jana die ___ Mädchen?", options: ["lauteste", "lauteren", "lautesten", "laute"], correct: 2 },
+  { text: "Sind Lisa und Jana die ___ Mädchen?", options: ["laute", "lauteste", "lautesten", "lauteren"], correct: 2 },
 
-  // --- Komparativ/Superlativ: Adjektiv nach dem Nomen ---
-  { text: "Der Hund ist ___ als der von Marie.", options: ["größer", "groß", "am größten", "größtes"], correct: 0 },
-  { text: "Das Kleid ist ___ als deins.", options: ["schöner", "schön", "am schönsten", "schöne"], correct: 0 },
-  { text: "Die Haare sind ___ als gestern.", options: ["heller", "hell", "hellsten", "helle"], correct: 0 },
+  { text: "Der Hund ist ___ als der von Marie.", options: ["am größten", "groß", "größer", "größtes"], correct: 2 },
+  { text: "Das Kleid ist ___ als deins.", options: ["schön", "schöner", "am schönsten", "schöne"], correct: 1 },
+  { text: "Die Haare sind ___ als gestern.", options: ["hell", "hellsten", "heller", "helle"], correct: 2 },
   { text: "Der Junge ist ___ als Jonas.", options: ["älter", "alt", "ältere", "ältest"], correct: 0 },
-  { text: "Die Pause ist heute ___ als gestern.", options: ["länger", "lang", "lange", "langste"], correct: 0 },
+  { text: "Die Pause ist heute ___ als gestern.", options: ["lang", "lange", "langste", "länger"], correct: 3 },
   { text: "Das Kind ist ___ als die anderen.", options: ["ruhiger", "ruhig", "ruhigste", "ruhiges"], correct: 0 },
-  { text: "Der Schüler ist der ___ in der Klasse.", options: ["neuste", "neueste", "neuester", "neuer"], correct: 1 },
-  { text: "Dieses Haus ist ___ als unseres.", options: ["älter", "alt", "ältestes", "ältere"], correct: 0 },
-  { text: "Das ist mein ___ Freund.", options: ["bester", "bessere", "gut", "bestes"], correct: 0 },
-  { text: "Der Junge ist das ___ Kind in der Gruppe.", options: ["ruhigste", "ruhiger", "ruhigen", "ruhig"], correct: 0 },
+  { text: "Der Schüler ist der ___ in der Klasse.", options: ["neuester", "neuste", "neueste", "neuer"], correct: 2 },
+  { text: "Dieses Haus ist ___ als unseres.", options: ["alt", "älter", "ältestes", "ältere"], correct: 1 },
+  { text: "Das ist mein ___ Freund.", options: ["bessere", "bester", "gut", "bestes"], correct: 1 },
+  { text: "Der Junge ist das ___ Kind in der Gruppe.", options: ["ruhiger", "ruhigste", "ruhigen", "ruhig"], correct: 1 },
 
-  // --- 10 Aufgaben: so ... wie / nicht so ... wie / ...er als ---
-  { text: "Lisa ist ___ groß wie Julia.", options: ["so", "nicht so", "größer", "mehr"], correct: 0 },
+  { text: "Lisa ist ___ groß wie Julia.", options: ["mehr", "so", "nicht so", "größer"], correct: 1 },
   { text: "Tim ist ___ stark wie Leon.", options: ["nicht so", "so", "stärker", "weniger"], correct: 0 },
   { text: "Das Auto ist ___ schneller als das Fahrrad.", options: ["viel", "schneller", "so", "nicht so"], correct: 1 },
-  { text: "Der Test war ___ schwer wie letzte Woche.", options: ["nicht so", "so", "schwieriger", "am schwersten"], correct: 0 },
+  { text: "Der Test war ___ schwer wie letzte Woche.", options: ["schwieriger", "am schwersten", "nicht so", "so"], correct: 2 },
   { text: "Heute ist es ___ warm wie gestern.", options: ["so", "wärmer", "nicht so", "wie"], correct: 0 },
-  { text: "Dieser Film ist ___ spannender als der andere.", options: ["viel", "nicht so", "so", "deutlich"], correct: 0 },
-  { text: "Die Aufgabe ist ___ kompliziert wie gestern.", options: ["nicht so", "komplizierter", "so", "komplexer"], correct: 0 },
-  { text: "Paul ist ___ sportlicher als Max.", options: ["etwas", "nicht so", "viel", "so"], correct: 0 },
+  { text: "Dieser Film ist ___ spannender als der andere.", options: ["nicht so", "viel", "so", "deutlich"], correct: 1 },
+  { text: "Die Aufgabe ist ___ kompliziert wie gestern.", options: ["komplizierter", "nicht so", "so", "komplexer"], correct: 1 },
+  { text: "Paul ist ___ sportlicher als Max.", options: ["nicht so", "viel", "so", "etwas"], correct: 3 },
   { text: "Das neue Handy ist ___ teuer wie das alte.", options: ["nicht so", "so", "teurer", "mehr"], correct: 0 },
-  { text: "Der Film war ___ lustig wie erwartet.", options: ["so", "nicht so", "lustiger", "mehr"], correct: 0 }
+  { text: "Der Film war ___ lustig wie erwartet.", options: ["nicht so", "so", "lustiger", "mehr"], correct: 1 }
 
 
 
