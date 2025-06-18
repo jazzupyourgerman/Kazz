@@ -5,12 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lückensätze – Wohnen</title>
   <style>
-    body, html {
+    html, body {
       margin: 0;
       padding: 0;
       font-family: Arial, sans-serif;
-      background-color: #f2f2f2;
+      background-color: #000;
+      color: #fff;
       text-align: center;
+      height: 100vh;
+      overflow: hidden;
+      overscroll-behavior: none;
+      touch-action: pan-x;
+    }
+
+    img.logo {
+      width: 120px;
+      margin-top: 20px;
     }
 
     .start-screen, .question-screen, .result-screen {
@@ -27,9 +37,9 @@
     }
 
     .start-screen h1 {
-      color: #333;
+      color: white;
       font-size: 1.8em;
-      margin-bottom: 20px;
+      margin: 20px 0;
     }
 
     .start-button {
@@ -47,7 +57,8 @@
     }
 
     .question-screen {
-      display: none;
+      display: flex;
+      position: relative;
     }
 
     .question {
@@ -70,7 +81,7 @@
       flex-direction: column;
       gap: 10px;
       max-width: 300px;
-      margin: 0 auto;
+      margin: 0 auto 20px auto;
     }
 
     .answers button {
@@ -92,6 +103,27 @@
       opacity: 0.8;
     }
 
+    .nav-buttons {
+      display: flex;
+      justify-content: space-between;
+      width: 300px;
+      margin: 0 auto;
+    }
+
+    .nav-buttons button {
+      padding: 10px 20px;
+      font-size: 1em;
+      border: none;
+      border-radius: 8px;
+      background-color: #555;
+      color: white;
+      cursor: pointer;
+    }
+
+    .nav-buttons button:hover {
+      background-color: #777;
+    }
+
     .result-screen h2 {
       font-size: 1.5em;
     }
@@ -109,73 +141,80 @@
     }
 
     .corrections p {
-      margin: 4px 0;
+      margin: 8px 0;
+    }
+
+    .progress-bar {
+      height: 10px;
+      background: #444;
+      margin-top: 10px;
+      width: 100%;
+    }
+
+    .progress {
+      height: 10px;
+      background: green;
+      width: 0%;
+    }
+
+    .social-icons {
+      margin-top: 20px;
+    }
+
+    .social-icons a {
+      margin: 0 10px;
+      color: white;
+      text-decoration: none;
+      font-size: 1.5em;
     }
   </style>
 </head>
 <body>
   <div class="start-screen">
-    <h1>Wähle das richtige Wort!</h1>
+    <img src="logo.png" alt="Logo" class="logo">
+    <h1>Swipe left or right!</h1>
     <button class="start-button" onclick="startQuiz()">Los geht’s!</button>
   </div>
 
   <div class="question-screen">
     <p id="progress-text"></p>
+    <div class="progress-bar"><div class="progress" id="progress-bar"></div></div>
     <div class="question" id="question-container"></div>
+    <div class="nav-buttons">
+      <button onclick="prevQuestion()">Zurück</button>
+      <button onclick="nextQuestion()">Weiter</button>
+    </div>
   </div>
 
   <div class="result-screen">
     <h2 id="score-text"></h2>
     <div class="corrections" id="correction-list"></div>
-<button class="start-button" onclick="restartQuiz()">Nochmal spielen</button>
+    <button class="start-button" onclick="restartQuiz()">Nochmal spielen</button>
+    <div class="social-icons">
+      <a href="https://www.jazzupyourgerman.com" target="_blank">🌐</a>
+      <a href="https://www.instagram.com/jazzupyourgerman/" target="_blank">📸</a>
+    </div>
   </div>
 
   <script>
+  const questions = [
+  { text: "Das Hotel liegt ___ in der Stadt.", options: ["an", "in", "mitten", "aus"], correct: 2 },
+  { text: "Anna schaut ___ dem Fenster.", options: ["an", "aus", "in", "von"], correct: 1 },
+  { text: "Wir fahren nicht durch die Stadt, sondern ___ die Stadt herum.", options: ["über", "um", "neben", "von"], correct: 1 },
+  { text: "Der Parkplatz ist direkt ___ der Schule.", options: ["an", "neben", "hinter", "unter"], correct: 2 },
+  { text: "Die Kirche ist ___ dem Rathaus und dem Supermarkt.", options: ["zwischen", "in", "an", "über"], correct: 0 },
+  { text: "Zum Bahnhof? Am besten gehen Sie ___ die Brücke und dann rechts.", options: ["über", "unter", "an", "hinter"], correct: 0 },
+  { text: "Er sucht seinen Hund, aber er kann ihn nicht sehen, weil der Hund ___ dem Auto sitzt.", options: ["zwischen", "an", "hinter", "unter"], correct: 2 },
+  { text: "Der Keller ist ___ dem Erdgeschoss.", options: ["in", "unter", "über", "aus"], correct: 1 },
+  { text: "Hängt eure Jacken dort ___ die Garderobe!", options: ["unter", "hinter", "neben", "zwischen"], correct: 2 },
+  { text: "Ich bekomme eine Postkarte ___ meiner Cousine. Sie macht gerade Urlaub ___ Italien.", options: ["von / in", "aus / in", "aus / über", "mit / an"], correct: 0 },
+];
 
 
-
-
-const questions = [
-  { text: "Hat Max einen ___ Bruder als Leo?", options: ["jüngerer", "jüngeren", "jüngstes", "jüngeres"], correct: 1 },
-  { text: "Ist Leonie ihre ___ Schwester?", options: ["älteres", "ältere", "älterer", "ältestes"], correct: 1 },
-  { text: "Wer trägt die ___ Hose?", options: ["lange", "langer", "längste", "längeren"], correct: 2 },
-  { text: "Wie heißt das ___ Kind in der Gruppe?", options: ["kleiner", "kleinster", "kleinste", "kleines"], correct: 2 },
-  { text: "Hat Uwe ein ___ Kind als Tom?", options: ["kleines", "kleineres", "kleinste", "kleinster"], correct: 1 },
-  { text: "Wer hat den ___ Hund?", options: ["größter", "größer", "großer", "größten"], correct: 3 },
-  { text: "Hat Mia eine ___ Schwester?", options: ["klug", "klügste", "kluger", "kluge"], correct: 3 },
-  { text: "Ist Ben ein ___ Junge als Jonas?", options: ["größter", "größerer", "großes", "größte"], correct: 1 },
-  { text: "Wie viele ___ Kinder als Paul sind im Raum?", options: ["älterer", "älteres", "ältere", "ältesten"], correct: 2 },
-  { text: "Sind Lisa und Jana die ___ Mädchen?", options: ["laute", "lauteste", "lautesten", "lauteren"], correct: 2 },
-
-  { text: "Der Hund ist ___ als der von Marie.", options: ["am größten", "groß", "größer", "größtes"], correct: 2 },
-  { text: "Das Kleid ist ___ als deins.", options: ["schön", "schöner", "am schönsten", "schöne"], correct: 1 },
-  { text: "Die Haare sind ___ als gestern.", options: ["hell", "hellsten", "heller", "helle"], correct: 2 },
-  { text: "Der Junge ist ___ als Jonas.", options: ["älter", "alt", "ältere", "ältest"], correct: 0 },
-  { text: "Die Pause ist heute ___ als gestern.", options: ["lang", "lange", "langste", "länger"], correct: 3 },
-  { text: "Das Kind ist ___ als die anderen.", options: ["ruhiger", "ruhig", "ruhigste", "ruhiges"], correct: 0 },
-  { text: "Der Schüler ist der ___ in der Klasse.", options: ["neuester", "neuste", "neueste", "neuer"], correct: 2 },
-  { text: "Dieses Haus ist ___ als unseres.", options: ["alt", "älter", "ältestes", "ältere"], correct: 1 },
-  { text: "Das ist mein ___ Freund.", options: ["bessere", "bester", "gut", "bestes"], correct: 1 },
-  { text: "Der Junge ist das ___ Kind in der Gruppe.", options: ["ruhiger", "ruhigste", "ruhigen", "ruhig"], correct: 1 },
-
-  { text: "Lisa ist ___ groß wie Julia.", options: ["mehr", "so", "nicht so", "größer"], correct: 1 },
-  { text: "Tim ist ___ stark wie Leon.", options: ["nicht so", "so", "stärker", "weniger"], correct: 0 },
-  { text: "Das Auto ist ___ schneller als das Fahrrad.", options: ["viel", "schneller", "so", "nicht so"], correct: 1 },
-  { text: "Der Test war ___ schwer wie letzte Woche.", options: ["schwieriger", "am schwersten", "nicht so", "so"], correct: 2 },
-  { text: "Heute ist es ___ warm wie gestern.", options: ["so", "wärmer", "nicht so", "wie"], correct: 0 },
-  { text: "Dieser Film ist ___ spannender als der andere.", options: ["nicht so", "viel", "so", "deutlich"], correct: 1 },
-  { text: "Die Aufgabe ist ___ kompliziert wie gestern.", options: ["komplizierter", "nicht so", "so", "komplexer"], correct: 1 },
-  { text: "Paul ist ___ sportlicher als Max.", options: ["nicht so", "viel", "so", "etwas"], correct: 3 },
-  { text: "Das neue Handy ist ___ teuer wie das alte.", options: ["nicht so", "so", "teurer", "mehr"], correct: 0 },
-  { text: "Der Film war ___ lustig wie erwartet.", options: ["nicht so", "so", "lustiger", "mehr"], correct: 1 }
-
-
-
-
-    ];
     let currentQuestion = 0;
     let score = 0;
     let incorrectAnswers = [];
+    let userAnswers = [];
 
     function startQuiz() {
       document.querySelector('.start-screen').style.display = 'none';
@@ -186,10 +225,12 @@ const questions = [
     function showQuestion() {
       const container = document.getElementById('question-container');
       const progressText = document.getElementById('progress-text');
+      const progressBar = document.getElementById('progress-bar');
       container.innerHTML = '';
 
       const q = questions[currentQuestion];
       progressText.textContent = `Frage ${currentQuestion + 1} von ${questions.length}`;
+      progressBar.style.width = `${((currentQuestion) / questions.length) * 100}%`;
 
       const questionText = document.createElement('p');
       questionText.textContent = q.text;
@@ -219,24 +260,34 @@ const questions = [
         } else if (btn === clickedButton) {
           btn.style.backgroundColor = 'red';
         } else {
-          btn.style.backgroundColor = '#aaa';
+          btn.style.backgroundColor = '#007bff';
         }
       });
+
+      userAnswers[currentQuestion] = index;
 
       if (index === q.correct) {
         score++;
       } else {
         incorrectAnswers.push({ question: q.text, correctAnswer: q.options[q.correct] });
       }
+    }
 
-      setTimeout(() => {
+    function nextQuestion() {
+      if (currentQuestion < questions.length - 1) {
         currentQuestion++;
-        if (currentQuestion < questions.length) {
-          showQuestion();
-        } else {
-          showResult();
-        }
-      }, 1200);
+        showQuestion();
+      } else if (currentQuestion === questions.length - 1) {
+        currentQuestion++;
+        showResult();
+      }
+    }
+
+    function prevQuestion() {
+      if (currentQuestion > 0) {
+        currentQuestion--;
+        showQuestion();
+      }
     }
 
     function showResult() {
@@ -250,22 +301,45 @@ const questions = [
       const correctionList = document.getElementById('correction-list');
       correctionList.innerHTML = '';
 
-      incorrectAnswers.forEach(item => {
+      questions.forEach((q, i) => {
         const p = document.createElement('p');
-        p.innerHTML = `Frage: ${item.question.replace("___", "_____")}<br><strong>Richtige Antwort:</strong> ${item.correctAnswer}`;
+        const isCorrect = userAnswers[i] === q.correct;
+        const status = isCorrect ? "✅ Richtig" : `❌ Falsch – Richtige Antwort: ${q.options[q.correct]}`;
+        p.innerHTML = `<strong>Frage ${i + 1}:</strong> ${q.text.replace("___", "_____")}<br>${status}`;
         correctionList.appendChild(p);
       });
+    }
 
+    function restartQuiz() {
+      currentQuestion = 0;
+      score = 0;
+      incorrectAnswers = [];
+      userAnswers = [];
 
-function restartQuiz() {
-  currentQuestion = 0;
-  score = 0;
-  incorrectAnswers = [];
+      document.querySelector('.result-screen').style.display = 'none';
+      document.querySelector('.start-screen').style.display = 'flex';
+    }
 
-  document.querySelector('.result-screen').style.display = 'none';
-  document.querySelector('.start-screen').style.display = 'flex';
+    // Swipe gesture support
+    let touchStartX = 0;
+    let touchEndX = 0;
 
-  }
+    document.addEventListener('touchstart', e => {
+      touchStartX = e.changedTouches[0].screenX;
+    });
+
+    document.addEventListener('touchend', e => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    });
+
+    function handleSwipe() {
+      if (touchEndX < touchStartX - 50) {
+        nextQuestion();
+      }
+      if (touchEndX > touchStartX + 50) {
+        prevQuestion();
+      }
     }
   </script>
 </body>
