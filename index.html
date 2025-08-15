@@ -124,6 +124,16 @@
       background-color: #777;
     }
 
+    .result-screen {
+      display: none;
+      height: 100vh;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      padding: 20px;
+      overflow-y: auto; /* ✨ Scrollen nur auf Auswertungsseite erlauben */
+    }
+
     .result-screen h2 {
       font-size: 1.5em;
     }
@@ -195,22 +205,159 @@
       <a href="https://www.instagram.com/jazzupyourgerman/" target="_blank">📸</a>
     </div>
   </div>
-
-  <script>
-  const questions = [
-  { text: "Das Hotel liegt ___ in der Stadt.", options: ["an", "in", "mitten", "aus"], correct: 2 },
-  { text: "Anna schaut ___ dem Fenster.", options: ["an", "aus", "in", "von"], correct: 1 },
-  { text: "Wir fahren nicht durch die Stadt, sondern ___ die Stadt herum.", options: ["über", "um", "neben", "von"], correct: 1 },
-  { text: "Der Parkplatz ist direkt ___ der Schule.", options: ["an", "neben", "hinter", "unter"], correct: 2 },
-  { text: "Die Kirche ist ___ dem Rathaus und dem Supermarkt.", options: ["zwischen", "in", "an", "über"], correct: 0 },
-  { text: "Zum Bahnhof? Am besten gehen Sie ___ die Brücke und dann rechts.", options: ["über", "unter", "an", "hinter"], correct: 0 },
-  { text: "Er sucht seinen Hund, aber er kann ihn nicht sehen, weil der Hund ___ dem Auto sitzt.", options: ["zwischen", "an", "hinter", "unter"], correct: 2 },
-  { text: "Der Keller ist ___ dem Erdgeschoss.", options: ["in", "unter", "über", "aus"], correct: 1 },
-  { text: "Hängt eure Jacken dort ___ die Garderobe!", options: ["unter", "hinter", "neben", "zwischen"], correct: 2 },
-  { text: "Ich bekomme eine Postkarte ___ meiner Cousine. Sie macht gerade Urlaub ___ Italien.", options: ["von / in", "aus / in", "aus / über", "mit / an"], correct: 0 },
+<script>
+const questions = [
+  { 
+    text: "Was bedeutet 'der große Garten'?", 
+    options: ["the big garden", "a big garden"], 
+    correct: 0 
+  },
+  { 
+    text: "Was bedeutet 'ein großer Garten'?", 
+    options: ["the big garden", "a big garden"], 
+    correct: 1 
+  },
+  { 
+    text: "Was bedeutet 'der Fischteich'?", 
+    options: ["the fish pond", "the fishing rod"], 
+    correct: 0 
+  },
+  { 
+    text: "Was sind 'Fischeier'?", 
+    options: ["fish eggs", "snake eggs"], 
+    correct: 0 
+  },
+  { 
+    text: "Was sind 'Schlangeneier'?", 
+    options: ["snake eggs", "fish eggs"], 
+    correct: 0 
+  },
+  { 
+    text: "„Fischeier waren in der Entengrütze“ bedeutet:", 
+    options: ["Fish eggs were in the duckweed", "Fish eggs were in the sand"], 
+    correct: 0 
+  },
+  { 
+    text: "Sie hat Angst, dass die Fische …", 
+    options: ["die Froscheier fressen", "den Kescher fressen"], 
+    correct: 0 
+  },
+  { 
+    text: "„Sie überlegt, wie sie die Fische loswerden kann“ bedeutet:", 
+    options: ["She thinks about how to get rid of the fish", "She thinks about how to feed the fish"], 
+    correct: 0 
+  },
+  { 
+    text: "Was bedeutet 'sehr tief'?", 
+    options: ["very shallow", "very deep"], 
+    correct: 1 
+  },
+  { 
+    text: "Was bedeutet 'sehr flach'?", 
+    options: ["very deep", "very shallow"], 
+    correct: 1 
+  },
+  { 
+    text: "„Ich werde Konrad genannt“ bedeutet:", 
+    options: ["I am called Konrad", "I will call Konrad"], 
+    correct: 0 
+  },
+  { 
+    text: "„Du wirst Kazz genannt“ bedeutet:", 
+    options: ["You are called Kazz", "You call Kazz"], 
+    correct: 0 
+  },
+  { 
+    text: "Was bedeutet 'Fischköder'?", 
+    options: ["fish bait", "fish net"], 
+    correct: 0 
+  },
+  { 
+    text: "Was bedeutet 'der Kescher'?", 
+    options: ["fishing net", "fishing rod"], 
+    correct: 0 
+  },
+  { 
+    text: "„rausgehen“ bedeutet:", 
+    options: ["to go outside", "to go inside"], 
+    correct: 0 
+  },
+  { 
+    text: "Was bedeutet 'caliente' im Deutschen?", 
+    options: ["warm/heiß", "kalt"], 
+    correct: 0 
+  },
+  { 
+    text: "Was bedeutet 'el calor'?", 
+    options: ["the heat/warmth", "the cold"], 
+    correct: 0 
+  },
+  { 
+    text: "„Ich spreche es aus“ bedeutet:", 
+    options: ["I pronounce it", "I spell it"], 
+    correct: 0 
+  },
+  { 
+    text: "„Es ist einfacher, auszusprechen“ bedeutet:", 
+    options: ["It is easier to pronounce", "It is easier to remember"], 
+    correct: 0 
+  },
+  { 
+    text: "Was bedeutet 'riechen'?", 
+    options: ["to smell", "to taste"], 
+    correct: 0 
+  },
+  { 
+    text: "Was bedeutet 'teurere Parfums'?", 
+    options: ["more expensive perfumes", "cheaper perfumes"], 
+    correct: 0 
+  },
+  { 
+    text: "„Berlin ist meine Wahlheimat“ bedeutet:", 
+    options: ["Berlin is my adopted home", "Berlin is my birthplace"], 
+    correct: 0 
+  },
+  { 
+    text: "Was bedeutet 'ins Ausland'?", 
+    options: ["to go abroad", "from abroad"], 
+    correct: 0 
+  },
+  { 
+    text: "Was bedeutet 'aus dem Ausland'?", 
+    options: ["from abroad", "to go abroad"], 
+    correct: 0 
+  },
+  { 
+    text: "„Ich frage Chat GPT nach einer Ausbildung, wenn ich Fragen habe“ bedeutet:", 
+    options: ["I ask Chat GPT about training when I have questions", "I tell Chat GPT about my training"], 
+    correct: 0 
+  },
+  { 
+    text: "Was bedeutet 'Stellenangebot'?", 
+    options: ["job offer", "job seeker"], 
+    correct: 0 
+  },
+  { 
+    text: "Was bedeutet 'etwas'?", 
+    options: ["something", "nothing"], 
+    correct: 0 
+  },
+  { 
+    text: "Was bedeutet 'nichts'?", 
+    options: ["nothing", "something"], 
+    correct: 0 
+  },
+  { 
+    text: "Was bedeutet 'jemand'?", 
+    options: ["someone", "nobody"], 
+    correct: 0 
+  },
+  { 
+    text: "Was bedeutet 'niemand'?", 
+    options: ["nobody", "somebody"], 
+    correct: 0 
+  }
 ];
-
-
     let currentQuestion = 0;
     let score = 0;
     let incorrectAnswers = [];
@@ -219,6 +366,7 @@
     function startQuiz() {
       document.querySelector('.start-screen').style.display = 'none';
       document.querySelector('.question-screen').style.display = 'flex';
+      document.body.style.overflow = 'hidden'; // ✨ Scrollen verhindern
       showQuestion();
     }
 
@@ -294,6 +442,7 @@
       document.querySelector('.question-screen').style.display = 'none';
       const resultScreen = document.querySelector('.result-screen');
       resultScreen.style.display = 'flex';
+      document.body.style.overflow = 'auto'; // ✨ Scrollen auf Auswertungsseite erlauben
 
       const scoreText = document.getElementById('score-text');
       scoreText.textContent = `Du hast ${score} von ${questions.length} richtig.`;
@@ -318,6 +467,7 @@
 
       document.querySelector('.result-screen').style.display = 'none';
       document.querySelector('.start-screen').style.display = 'flex';
+      document.body.style.overflow = 'hidden'; // ✨ Scrollen wieder deaktivieren
     }
 
     // Swipe gesture support
